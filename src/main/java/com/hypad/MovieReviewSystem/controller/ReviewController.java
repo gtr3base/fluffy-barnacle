@@ -1,6 +1,7 @@
 package com.hypad.MovieReviewSystem.controller;
 
 import com.hypad.MovieReviewSystem.dto.ReviewDTO;
+import com.hypad.MovieReviewSystem.dto.ReviewRepoDTO;
 import com.hypad.MovieReviewSystem.models.Review;
 import com.hypad.MovieReviewSystem.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ReviewController {
     }
 
     @GetMapping("/movie/{movieId}")
-    public List<Review> getReviewsByMovieId(@PathVariable Long movieId, @RequestParam(required = false) String sortBy){
+    public List<ReviewRepoDTO> getReviewsByMovieId(@PathVariable Long movieId, @RequestParam(required = false) String sortBy){
         return reviewService.getReviewsByMovieId(movieId, sortBy);
     }
 }

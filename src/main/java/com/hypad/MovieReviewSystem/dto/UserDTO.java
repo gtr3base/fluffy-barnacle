@@ -4,6 +4,7 @@ import com.hypad.MovieReviewSystem.enums.RoleEnum;
 import com.hypad.MovieReviewSystem.models.Review;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @project MovieReviewSystem
  */
 @Getter
+@Setter
 public class UserDTO {
     private Long id;
 

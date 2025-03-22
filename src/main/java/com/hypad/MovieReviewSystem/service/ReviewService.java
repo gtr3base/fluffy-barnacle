@@ -1,6 +1,7 @@
 package com.hypad.MovieReviewSystem.service;
 
 import com.hypad.MovieReviewSystem.dto.ReviewDTO;
+import com.hypad.MovieReviewSystem.dto.ReviewRepoDTO;
 import com.hypad.MovieReviewSystem.models.Review;
 import com.hypad.MovieReviewSystem.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    public List<Review> getReviewsByMovieId(Long movieId, String sortBy){
+    public List<ReviewRepoDTO> getReviewsByMovieId(Long movieId, String sortBy){
         if("rating".equals(sortBy)){
             return reviewRepository.findByMovieIdOrderByRatingDesc(movieId);
         }else{
