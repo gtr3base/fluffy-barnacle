@@ -2,6 +2,7 @@ package com.hypad.MovieReviewSystem.repository;
 
 import com.hypad.MovieReviewSystem.dto.ReviewRepoDTO;
 import com.hypad.MovieReviewSystem.models.Review;
+import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +29,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "WHERE r.movie.id = :movieId " +
             "ORDER BY r.rating DESC")
     List<ReviewRepoDTO> findByMovieIdOrderByRatingDesc(Long movieId);
+
 }

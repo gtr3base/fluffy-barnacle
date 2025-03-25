@@ -1,6 +1,7 @@
 package com.hypad.MovieReviewSystem.service;
 
 import com.hypad.MovieReviewSystem.dto.UserDTO;
+import com.hypad.MovieReviewSystem.dto.UserRepoDTO;
 import com.hypad.MovieReviewSystem.enums.RoleEnum;
 import com.hypad.MovieReviewSystem.models.User;
 import com.hypad.MovieReviewSystem.repository.UserRepository;
@@ -10,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -45,7 +50,9 @@ public class UserService {
         return userRepository.save(exUser);
     }
 
-    public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("No such user found by id"));
+    public String findById(Long id) {
+        return userRepository.findUserById(id).orElseThrow(() -> new RuntimeException("No user with id " + id + " found")).toString()
+                + "{reviews counter:" + userRepository.findReviewIdsByUserId(id)
+                .stream().map(Object::toString).collect(Collectors.joining()) + "}";
     }
 }

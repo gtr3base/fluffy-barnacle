@@ -1,6 +1,7 @@
 package com.hypad.MovieReviewSystem.controller;
 
 import com.hypad.MovieReviewSystem.dto.UserDTO;
+import com.hypad.MovieReviewSystem.dto.UserRepoDTO;
 import com.hypad.MovieReviewSystem.models.User;
 import com.hypad.MovieReviewSystem.service.JwtService;
 import com.hypad.MovieReviewSystem.service.UserService;
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getSpecificUser(@PathVariable Long id){
+    public ResponseEntity<String> getSpecificUser(@PathVariable Long id){
         return ResponseEntity.ok(userService.findById(id));
     }
 }
