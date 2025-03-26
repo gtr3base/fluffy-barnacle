@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${movie.title}">Movie Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --netflix-red: #e50914;
+            --netflix-dark: #141414;
+            --netflix-light: #f5f5f1;
+            --netflix-gray: #808080;
+            --netflix-dark-gray: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--netflix-dark);
+            color: var(--netflix-light);
+            font-family: 'Netflix Sans', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.4;
+        }
+
+        .hero-section {
+            position: relative;
+            height: 80vh;
+            background: linear-gradient(to top, var(--netflix-dark) 0%, transparent 50%);
+            display: flex;
+            align-items: center;
+            padding: 0 4%;
+            margin-bottom: 2rem;
+        }
+
+        .hero-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .movie-content {
+            max-width: 40%;
+            z-index: 1;
+        }
+
+        .movie-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .movie-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .match-score {
+            color: #46d369;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .year {
+            margin-right: 1rem;
+        }
+
+        .maturity-rating {
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 0 0.5rem;
+            margin-right: 1rem;
+        }
+
+        .movie-description {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-play {
+            background-color: white;
+            color: black;
+        }
+
+        .btn-play:hover {
+            background-color: rgba(255,255,255,0.8);
+        }
+
+        .btn-info {
+            background-color: rgba(109, 109, 110, 0.7);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: rgba(109, 109, 110, 0.4);
+        }
+
+        .movie-details {
+            padding: 0 4%;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            color: var(--netflix-gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+        }
+
+        .reviews-section {
+            padding: 0 4%;
+            margin-bottom: 4rem;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .review-card {
+            background-color: var(--netflix-dark-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-rating {
+            color: var(--netflix-red);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-comment {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .review-meta {
+            color: var(--netflix-gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .movie-content {
+                max-width: 100%;
+            }
+
+            .movie-title {
+                font-size: 2.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<section class="hero-section">
+    <div class="hero-backdrop" style="background-image: url('https://image.tmdb.org/t/p/original/[YOUR_BACKDROP_IMAGE_PATH]');"></div>
+    <div class="movie-content">
+        <h1 class="movie-title" th:text="${movie.title}">Movie Title</h1>
+
+        <div class="movie-meta">
+            <span class="match-score">97% Match</span>
+            <span class="year" th:text="${movie.releaseDate}">2023</span>
+            <span class="maturity-rating">18+</span>
+            <span class="duration">2h 15m</span>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-play">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z" fill="currentColor"/>
+                </svg>
+                Play
+            </button>
+            <button class="btn btn-info">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3ZM1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM13 10V18H11V10H13ZM12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" fill="currentColor"/>
+                </svg>
+                More Info
+            </button>
+        </div>
+
+        <p class="movie-description" th:text="${movie.description}">Movie description goes here. This is where you'd put the plot summary and other key information about the movie.</p>
+    </div>
+</section>
+
+<section class="movie-details">
+    <h2 class="section-title">Details</h2>
+    <div class="info-grid">
+        <div class="info-item">
+            <div class="info-label">Genre</div>
+            <div class="info-value" th:text="${movie.genre}">Action, Thriller</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Director</div>
+            <div class="info-value">Christopher Nolan</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Cast</div>
+            <div class="info-value">Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Writer</div>
+            <div class="info-value">Christopher Nolan</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Awards</div>
+            <div class="info-value">4 Oscars, 8 Wins & 33 Nominations Total</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Language</div>
+            <div class="info-value">English, Japanese, French</div>
+        </div>
+    </div>
+</section>
+
+<section class="reviews-section">
+    <h2 class="section-title">Reviews</h2>
+    <div class="reviews-grid">
+        <div class="review-card" th:each="review : ${movie.reviews}">
+            <div class="review-rating">
+                <span th:text="${review.rating} + '/10'">8.5/10</span>
+            </div>
+            <p class="review-comment" th:text="${review.comment}">This movie was absolutely incredible. The acting, the plot, the cinematography - everything was top notch.</p>
+            <div class="review-meta">
+                By <span th:text="${user.getUsername}">MovieFan123</span> on <span th:text="${review.createdAt}">2023-05-15</span>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

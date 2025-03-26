@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Netflix - Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --netflix-red: #e50914;
+      --netflix-dark: #141414;
+      --netflix-light: #f5f5f1;
+      --netflix-gray: #737373;
+      --netflix-dark-gray: #2a2a2a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--netflix-dark);
+      color: var(--netflix-light);
+      font-family: 'Netflix Sans', 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.4;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      padding: 20px 45px;
+    }
+
+    .navbar-brand {
+      color: var(--netflix-red);
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+      padding: 20px;
+      background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+      );
+    }
+
+    .login-box {
+      background-color: rgba(0, 0, 0, 0.75);
+      border-radius: 4px;
+      padding: 60px 68px 40px;
+      min-width: 450px;
+    }
+
+    .login-title {
+      font-size: 2rem;
+      margin-bottom: 28px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .form-control {
+      width: 100%;
+      height: 50px;
+      padding: 16px 20px 0;
+      background: var(--netflix-dark-gray);
+      border: none;
+      border-radius: 4px;
+      color: var(--netflix-light);
+      font-size: 1rem;
+    }
+
+    .form-control:focus {
+      outline: none;
+      background: var(--netflix-gray);
+    }
+
+    .form-label {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      color: var(--netflix-gray);
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    .form-control:focus + .form-label,
+    .form-control:not(:placeholder-shown) + .form-label {
+      top: 7px;
+      transform: translateY(0);
+      font-size: 0.75rem;
+    }
+
+    .login-button {
+      background-color: var(--netflix-red);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px;
+      margin: 24px 0 12px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .login-button:hover {
+      background-color: #f6121d;
+    }
+
+    .login-help {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+      font-size: 0.9rem;
+      color: var(--netflix-gray);
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+    }
+
+    .remember-me input {
+      margin-right: 5px;
+    }
+
+    .help-link {
+      color: var(--netflix-gray);
+      text-decoration: none;
+    }
+
+    .help-link:hover {
+      text-decoration: underline;
+    }
+
+    .signup-text {
+      color: var(--netflix-gray);
+      margin-top: 16px;
+    }
+
+    .signup-link {
+      color: white;
+      text-decoration: none;
+    }
+
+    .signup-link:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: var(--netflix-red);
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 30px 45px;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      margin-bottom: 30px;
+    }
+
+    .footer-link {
+      color: var(--netflix-gray);
+      text-decoration: none;
+      font-size: 0.8rem;
+      margin-right: 15px;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .login-box {
+        min-width: 100%;
+        padding: 20px;
+      }
+
+      .navbar {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="/" class="navbar-brand">NOT NETFLIX</a>
+</nav>
+
+<div class="login-container">
+  <div class="login-box">
+    <h1 class="login-title">Sign In</h1>
+
+    <div class="error-message" th:if="${param.error}">
+      Invalid username or password.
+    </div>
+
+    <form class="login-form" th:action="@{/login}" method="post">
+      <div class="form-group">
+        <input type="text" class="form-control" id="username" name="username"
+               placeholder=" " required autocomplete="username"/>
+        <label for="username" class="form-label">Email or phone number</label>
+      </div>
+
+      <div class="form-group">
+        <input type="password" class="form-control" id="password" name="password"
+               placeholder=" " required autocomplete="current-password"/>
+        <label for="password" class="form-label">Password</label>
+      </div>
+
+      <button type="submit" class="login-button">Sign In</button>
+
+      <div class="login-help">
+        <div class="remember-me">
+          <input type="checkbox" id="remember-me" name="remember-me">
+          <label for="remember-me">Remember me</label>
+        </div>
+        <a href="#" class="help-link">Need help?</a>
+      </div>
+    </form>
+
+    <p class="signup-text">
+      New to Us? <a href="/register" class="signup-link">Sign up now</a>.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-top">
+      <p>Questions? Call 1-844-505-2993</p>
+    </div>
+    <div class="footer-links">
+      <a href="#" class="footer-link">FAQ</a>
+      <a href="#" class="footer-link">Help Center</a>
+      <a href="#" class="footer-link">Terms of Use</a>
+      <a href="#" class="footer-link">Privacy</a>
+      <a href="#" class="footer-link">Cookie Preferences</a>
+      <a href="#" class="footer-link">Corporate Information</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

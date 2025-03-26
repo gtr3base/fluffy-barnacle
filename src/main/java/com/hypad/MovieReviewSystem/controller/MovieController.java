@@ -4,6 +4,7 @@ import com.hypad.MovieReviewSystem.dto.MovieDTO;
 import com.hypad.MovieReviewSystem.models.Movie;
 import com.hypad.MovieReviewSystem.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,4 +28,5 @@ public class MovieController {
     public Movie addMovie(@RequestBody MovieDTO movieDTO){
         return movieService.addMovie(movieDTO);
     }
+
 }

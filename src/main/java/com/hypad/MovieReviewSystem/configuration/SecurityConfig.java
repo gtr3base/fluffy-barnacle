@@ -35,6 +35,7 @@ public class SecurityConfig{
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin((login) -> login
+                        .loginPage("/login")
                         .defaultSuccessUrl("/",true)
                         .permitAll())
                 .logout(LogoutConfigurer::permitAll);
