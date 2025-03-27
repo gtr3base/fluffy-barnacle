@@ -29,7 +29,7 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/movies/**", "/register","/api/v1/user").permitAll()
+                        .requestMatchers("/movies/**", "/register","/api/v1/user", "/").permitAll()
                         .requestMatchers("/api/v1/user/{id}").hasRole(RoleEnum.ADMIN_ROLE.name())
                         .anyRequest().authenticated()
                 )
